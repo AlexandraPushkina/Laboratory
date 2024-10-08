@@ -18,20 +18,15 @@
         </div>
     </div>
 
-    <script>
-        let isClicked = false;
+    <script src="./script.js">
 
         const mainButton = document.getElementById('main_button');
         const changeButton = document.getElementById('change_button');
 
         mainButton.addEventListener('click', () => 
-        {
-            console.log(isClicked);        
+        {     
             changeButton.classList.toggle('changed'); // Добавление/удаление класса
-            isClicked = false;
-
         });
-        
         
         console.log("Hello world");
     </script>
