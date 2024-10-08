@@ -11,14 +11,13 @@
 
 #change_button{
     position: fixed;
-    transition: 0.2s;
+    transition: 0.3s;
     top: 50vh;
     left: 110vh;
     padding: 15px 32px;
     font-size: 16px;
     border-radius: 5px; /* Начальный радиус */
     transition: background-color 0.5s ease, border-radius 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
-    cursor: pointer;
 }
 
 #main_button:hover{
@@ -33,5 +32,5 @@
     background: radial-gradient(circle at 50% 50%, #ff5733, #ff8c00); /* Градиент */
     color: #fff;
     border-radius: 50%; /* Круглая форма */
-    transform: scale(1.1); /* Увеличение размера */
+    transform: scale(1.3); /* Увеличение размера */
 }
