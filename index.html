@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    
-
     <div>
-        <button id = "main_button">
+        <button id = "main_button" onclick="changeAnotherElement()">
             Click here to change style
         </button>
         <div id = "change_button">
@@ -18,18 +16,7 @@
         </div>
     </div>
 
-    <script src="./script.js">
-
-        const mainButton = document.getElementById('main_button');
-        const changeButton = document.getElementById('change_button');
-
-        mainButton.addEventListener('click', () => 
-        {     
-            changeButton.classList.toggle('changed'); // Добавление/удаление класса
-        });
-        
-        console.log("Hello world");
-    </script>
+    <script src="./script.js"></script>
 
 </body>
 
