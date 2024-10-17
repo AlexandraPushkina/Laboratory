@@ -1,17 +1,21 @@
 .child{
     border:solid, 3px, rgb(172, 187, 254);
+    background-color: rgb(225, 239, 251);
 }
 
 .young{
     border:solid, 3px, rgb(131, 153, 255);
+    background-color: rgb(177, 210, 239);
 }
 
 .adult{
     border:solid, 3px, rgb(92, 122, 255);
+    background-color: rgb(124, 178, 224);
 }
 
 .elderly{
     border:solid, 3px, rgb(54, 90, 249);
+    background-color: rgb(70, 143, 206);
 }
 
 .gap{
@@ -19,7 +23,7 @@
     justify-content: center;
 }
 
-.categorize_button{
+#categorize_button{
     text-align: center;
     font-weight: 600;
     transition: 0.1s;
@@ -27,6 +31,6 @@
     left:43%;
 }
 
-.categorize_button:hover{
+#categorize_button:hover{
     box-shadow: 0px 1px 2px 1px rgba(136, 138, 148,0.5);
 }
