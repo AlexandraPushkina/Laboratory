@@ -8,6 +8,9 @@
     // Loop over them and prevent submission
     Array.from(forms).forEach(form => {
       form.addEventListener('submit', event => {
+
+        console.log('test');
+
         const emailInput = document.getElemenetByID('InputEmail')
         const passwordInput = document.getElemenetByID('InputPassword');
         const numberInput = document.getElemenetByID('InputNumber');
@@ -16,9 +19,9 @@
         const regexPatternNumber = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{10}$/gm;
 
         let isValidEmail = regexPatternEmail.test(emailInput.value);
-        let isValidPassword = passwordInput.value.length < 4;
+        let isValidPassword = passwordInput.value.length > 4;
         let isValidNumber = regexPatternNumber.test(numberInput.value);
-        let isValidAge = parseInt(ageInput.value) < 18 || parseInt(ageInput.value) > 90;
+        let isValidAge = parseInt(ageInput.value) >= 18 && parseInt(ageInput.value) <= 90;
 
         if ( !isValidEmail || !isValidPassword || !isValidNumber || !isValidAge )  {
             event.preventDefault()
