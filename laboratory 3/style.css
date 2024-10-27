@@ -1,0 +1,9 @@
+#form-block{ 
+    
+    max-width:500px;    
+    transform: translate(0, calc(50vh - 400px));
+    padding: 50px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: rgb(194, 227, 243);
+}
