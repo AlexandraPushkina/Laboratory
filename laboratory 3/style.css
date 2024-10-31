@@ -1,6 +1,6 @@
 #form-block{ 
-    
-    max-width:500px;    
+    max-width:500px;
+    margin-top: 40px;    
     transform: translate(0, calc(50vh - 400px));
     padding: 50px;
     text-align: center;
