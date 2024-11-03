@@ -3,16 +3,45 @@ const idRecipe = 'd48672a8';
 const keyRecipe = 'e7d7b3410a7e1f38145f03ff2f29eb78';
 const dataTable = document.getElementById('dataTable');
 
-document.getElementById('button').addEventListener('click', () => fetchData(baseUrl));
 
-async function fetchData() {
-  const q = 'q=chicken';
-  const url = baseUrl+ `/recipes/v2?type=public&${q}&app_id=${idRecipe}&app_key=${keyRecipe}` ;
-  let response = await fetch(url).then(response => response.json());
-  console.log(response);
-  }
+async function takeData(query){
+  const url = baseUrl + `/recipes/v2?type=public&q=${query}&app_id=${idRecipe}&app_key=${keyRecipe}` ;
+  let response = fetch(url).then(response => response.json());
+  return response;
+}
 
-fetchData();
-//document.getElementById('button').addEventListener('click', () => fetchData(baseUrl));
+
+async function createTableWithData(query){
+  const header = document.getElementById("headName");
+  header.innerText = query;
+  const table = document.createElement('table');
+  table.classList.add('table', 'table-hover');
+
+  //get data
+  let jsonData = await takeData(query);
+
+  const thead = document.createElement('thead');
+  const theadRow = document.createElement('tr');
+  Object.getOwnPropertyNames(jsonData.hits[0].recipe).forEach(element => {
+    const th = document.createElement('th');
+    th.innerText = element;
+    theadRow.appendChild(th);
+    
+  });
+  thead.append(theadRow);
+  table.append(thead);
+  
+
+  //add data in table
+ // for (let i=0; i < jsonData.hits.length; i++){
+ //   const tr = documnent.createElement("tr");
+ //   
+ // }
+  
+  return table;
+}
+
+const tablePlace = document.getElementById("tablePlace");
+let table = createTableWithData("potato").then(result => tablePlace.appendChild(result));
 
 
