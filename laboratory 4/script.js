@@ -4,6 +4,7 @@ const keyRecipe = 'e7d7b3410a7e1f38145f03ff2f29eb78';
 const dataTable = document.getElementById('dataTable');
 
 
+
 async function takeData(query){
   const url = baseUrl + `/recipes/v2?type=public&q=${query}&app_id=${idRecipe}&app_key=${keyRecipe}` ;
   let response = fetch(url).then(response => response.json());
@@ -12,10 +13,17 @@ async function takeData(query){
 
 
 async function createTableWithData(query){
+
+  const existingTable = document.getElementById('existingTable');
+  if (existingTable) {
+    existingTable.remove();
+  } 
+
   const header = document.getElementById("headName");
   header.innerText = query;
   const table = document.createElement('table');
   table.classList.add('table', 'table-hover');
+  table.id = 'existingTable';
 
   //get data
   let jsonData = await takeData(query);
@@ -55,6 +63,8 @@ async function createTableWithData(query){
 }
 
 const tablePlace = document.getElementById("tablePlace");
-let table = createTableWithData("potato").then(result => tablePlace.appendChild(result));
 
+document.getElementById('Potato').addEventListener('click', () => createTableWithData('Potato').then(result => tablePlace.appendChild(result)));
+document.getElementById('Chicken').addEventListener('click', () => createTableWithData('Chicken').then(result => tablePlace.appendChild(result)));
+document.getElementById('Pear').addEventListener('click', () => createTableWithData('Pear').then(result => tablePlace.appendChild(result)));
 
