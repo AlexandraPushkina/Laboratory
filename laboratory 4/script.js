@@ -23,20 +23,33 @@ async function createTableWithData(query){
   const thead = document.createElement('thead');
   const theadRow = document.createElement('tr');
   Object.getOwnPropertyNames(jsonData.hits[0].recipe).forEach(element => {
-    const th = document.createElement('th');
-    th.innerText = element;
-    theadRow.appendChild(th);
+    if (element !== "digest" && element !== "tags" && element !== "image"){   //excluding big results
+      const th = document.createElement('th');
+      th.innerText = element;
+      theadRow.appendChild(th);
+    }
     
   });
   thead.append(theadRow);
   table.append(thead);
   
-
+  const tbody = document.createElement('tbody');
+  table.appendChild(tbody);
+  
   //add data in table
- // for (let i=0; i < jsonData.hits.length; i++){
- //   const tr = documnent.createElement("tr");
- //   
- // }
+  for (let i=0; i < jsonData.hits.length; i++){
+    const tr = document.createElement('tr');
+    Object.getOwnPropertyNames(jsonData.hits[0].recipe).forEach(element => {
+      if (element !== "digest" && element !== "tags" && element !== "image"){
+        const td = document.createElement("td");
+        td.innerText = jsonData.hits[i].recipe[element];
+        tr.appendChild(td);
+      }
+      
+    });
+    tbody.appendChild(tr);
+    
+  }
   
   return table;
 }
