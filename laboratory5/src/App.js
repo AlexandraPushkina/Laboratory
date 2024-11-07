@@ -1,5 +1,5 @@
 import './App.css';
-import TestString from '.components/TestString';
+import TestString from './components/TestString/TestString';
 
 function App() {
   return (
