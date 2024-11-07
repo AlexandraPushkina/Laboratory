@@ -1,9 +1,9 @@
 import React from 'react';
 
-
+const userName = "Alex";
 function TestString() {
    return(
-      <h1>Hello world</h1>
+      <h1>Hello, {userName}</h1>
    );
 }
 

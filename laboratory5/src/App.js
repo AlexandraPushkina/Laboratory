@@ -1,12 +1,10 @@
 import './App.css';
-import TestString from './components/TestString/TestString';
+import AdverCard from './components/AdverCard/AdverCard';
 
 function App() {
   return (
     <div className="App">
-      <TestString>
-        TestString
-      </TestString>
+      <AdverCard/>
     </div>
   );
 }
