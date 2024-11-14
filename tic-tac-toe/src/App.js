@@ -2,14 +2,6 @@ import { useState } from 'react';
 
 import './App.css';
 
-// function App() {
-//   return(
-//     <div className="App">
-//       <Board/>
-//     </div>
-//   );
-// }
-
 function Square({ value, onSquareClick }) // value и onSquareClick - это props(свойства этого Square)
 {
   return (
@@ -17,92 +9,35 @@ function Square({ value, onSquareClick }) // value и onSquareClick - это pro
   );
 }
 
-function Board({ xIsNext, squares, onPlay }){
-  //const [onPlay, setOnPlay] = useState(true); // Хук, который меняет значение состояния возможности игры
+function Board({ xIsNext, squares, onPlay, restartGame }){
   const [gameStatus, setGameStatus] = useState(true); // Хук, который меняет состояние строки вывода игры
-  // function checkWinner(squares)
-  // {
-  //   const winLines = [
-  //     [0, 1, 2],
-  //     [3, 4, 5],
-  //     [6, 7, 8],
-  //     [0, 3, 6],
-  //     [1, 4, 7],
-  //     [2, 5, 8],
-  //     [0, 4, 8],
-  //     [2, 4, 6]
-  //   ];
-
-  //   for(let i = 0; i < winLines.length; i++)
-  //   {
-  //      const [a, b, c] = winLines[i];
-  //      if(squares[a] === squares[b] && squares[a] === squares[c] && squares[a] !== '')
-  //         return squares[a];
-  //   }
-
-  //   if (!squares.includes(''))
-  //   {
-  //      restartGame();
-  //      return 'Nobody';
-  //   }
-  //   return null;
-  // }
-  
 
   function onSquareClick(i){
-    if (calculateWinner(squares) || squares[i]) {
+
+    const nextSquares = squares.slice();
+    if (squares[i] === null){
+      if (xIsNext) {
+        nextSquares[i] = 'X';
+      } else {
+        nextSquares[i] = 'O';
+      }
+    }
+   afterClick(nextSquares);
+  }
+
+  function afterClick(nextSquares){
+    let winner = calculateWinner(squares);
+    if (winner) {
+      setGameStatus(winner + ' is win this game');
+      setGameStatus('');
+      restartGame();
       return;
     }
-    const nextSquares = squares.slice();
-    if (xIsNext) {
-      nextSquares[i] = 'X';
-    } else {
-      nextSquares[i] = 'O';
+
+    if (!winner) {
+      setGameStatus('Next turn is: ' + (xIsNext ? 'O' : 'X'));
     }
-    onPlay(nextSquares);
-  }
-  const winner = calculateWinner(squares);
-  let status;
-  if (winner) {
-    status = 'Winner: ' + winner;
-    onPlay = false;
-    setGameStatus(winner + ' is win this game');
-  } else {
-    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
-  }
-    //if (squares[i] === '' && onPlay)
-    //{
-      // if (xIsNext){
-      //   squares[i] = 'X';
-      //   setXIsNext(false);
-      // }
-      // else{
-      //   squares[i] = 'O';
-      //   setXIsNext(true);
-      // }
-    //}
-    
-    //onPlay(nextSquares);
-    //afterClick();
-  //}
-
-  // function afterClick()
-  // {
-  //   const winner = checkWinner(squares);
-  //   if (winner !== null && winner !== 'Nobody')
-  //   {
-  //     setOnPlay(false);
-  //     setGameStatus(winner + ' is win this game');
-  //   }
-  //   else
-  //     setGameStatus('Next turn is: ' + (xIsNext ? 'O' : 'X'));
-  // }
-
-  function restartGame()
-  {
-    onPlay = true;
-    //squares = useState([Array(9).fill(null)]);
-    setGameStatus('');
+    onPlay(nextSquares);  
   }
 
   return (
@@ -140,6 +75,11 @@ export default function Game() {
     setCurrentMove(nextHistory.length - 1);
   }
 
+  function restartGame() {
+    setHistory([Array(9).fill(null)]); // Сброс истории
+    setCurrentMove(0); // Сброс текущего хода
+  }
+
   function jumpTo(nextMove) {
     setCurrentMove(nextMove);
   }
@@ -161,7 +101,11 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <Board 
+          xIsNext={xIsNext}
+          squares={currentSquares}
+          onPlay={handlePlay}
+          restartGame={restartGame} />
       </div>
       <div className="game-info">
         <ol>{moves}</ol>
@@ -187,8 +131,12 @@ function calculateWinner(squares) {
       return squares[a];
     }
   }
+  console.log(squares.includes(null));
+
+  if (!squares.includes(null)){
+      return 'Nobody';
+  }
+
   return null;
 }
 
-
-//export default App;
