@@ -28,6 +28,7 @@
   color: #61dafb;
 }
 
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +36,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+#sidebar {
+  width: 200px;
+  height: 100vh;
+  background-color: #f0f0f0;
+  overflow-y: auto; /* Добавляем скролл, если меню длинное */
+  position: fixed ;
+  padding: 10px;
+}
+#sidebar label {
+  
+  margin-bottom: 5px;
+}
+#dishes {
+  margin-left: 220px; /* Отступ справа от бокового меню */
+  padding: 10px;
 }
