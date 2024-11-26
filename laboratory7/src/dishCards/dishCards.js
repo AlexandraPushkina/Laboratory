@@ -1,8 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { Fire, Check, Check2Square, Globe2, Cup, X} from 'react-bootstrap-icons'; 
-import './dishCard.css';
+import { Fire, Check, Check2Square, Globe2, Cup, X } from 'react-bootstrap-icons'; 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -23,11 +22,11 @@ function noticeForVegan(hit){
     if (hit.healthLabels.find((i) => i === "Vegetarian") != -1 ){  //FIXME: возможно ошибка
         return 'Yes';
         }
-        else  'No';
+        else return 'No';
 }
 
-
-function dishCard(){
+//заполняем 1 карту
+function DishCard({hit}){
     return(
        <Card className='dishCard'>
        <Card.Body>
@@ -80,12 +79,27 @@ function dishCard(){
                </Col>
              </Row>
            </ListGroup.Item>
-           
+
          </ListGroup>
        </Card.Body>
      </Card>
     );
  }
-  
-export default dishCard;
- 
+
+//обрабатывать много карт 
+function DishCards({jsonData}){
+
+    if (!jsonData || !jsonData.hits) {
+        return <p>Ошибка, нет данных</p>; //Обработка ошибок
+      }
+
+    return (
+        <div id="dishes">
+            {jsonData.hits.map((hit, index) => (
+                <DishCard key={index} hit={hit.recipe}/>
+            ))}
+        </div>
+    )
+}
+
+export default DishCards;
