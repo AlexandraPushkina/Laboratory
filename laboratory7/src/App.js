@@ -1,53 +1,75 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import DishCards from './dishCards/dishCards';
 
-
-document.getElementById("button1").onclick = DataForCard;
-function GetResponseText(){
-  
-  const [mealType, setmealType] = useState(null); // Тип блюда (завтрак, обед, ужин и т.д.)
-  const [cuisineType, setcuisinType] = useState(null); // Кухня (американская, русская и т.д.)
-  //const [isForVegan, setisForVegan] = useState(false); // Подходит ли веганам
-
-  const baseUrl = 'https://api.edamam.com/api'; // Замените на ваш Endpoint 1
-  const idRecipe = 'd48672a8';
-  const keyRecipe = 'e7d7b3410a7e1f38145f03ff2f29eb78';
-  setmealType(document.querySelector("input[name='mealType']:checked"));
-  setcuisinType(document.querySelector("input[name='cuisineType']:checked"));
-  const isMealtypeNull = (mealType == "");
-  const query = mealType + isMealtypeNull?"":"," + cuisineType;
-  const url = baseUrl + `/recipes/v2?type=public&q=${query}&app_id=${idRecipe}&app_key=${keyRecipe}&field=uri&field=label&field=image&field=images&field=url&field=shareAs&field=dietLabels&field=healthLabels&field=ingredients&field=calories&field=totalTime&field=cuisineType&field=mealType&field=dishType` ;
-
-  DataForCard(url);
-}
-//Получаем данные для карт, делаем запрос
-async function DataForCard(url){
+function App() {
   const [jsonData, setJsonData] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      try{
-        let response = await fetch(url);
-        const data = await response.json();
-        setJsonData(data);
-        } catch (error){
-          console.error("Ошибка при получении данных: ", error);
+  const [mealType, setMealType] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Teatime'];
+
+  const handleMealTypeChange = (event) => {   
+    setMealType(event.target.value);
+    console.log(mealType); //почему-то в первый раз ничего не меняет и запрос получается с ошибкой
+    handleSubmit(); 
+  };
+
+  const handleSubmit = async () => {
+    console.log(mealType);
+    setLoading(true);
+    setError(null);
+    try {
+      const baseUrl = 'https://api.edamam.com/api';   
+      const idRecipe = 'd48672a8';
+      const keyRecipe = 'e7d7b3410a7e1f38145f03ff2f29eb78';
+      const url = `${baseUrl}/recipes/v2?type=public&app_id=${idRecipe}&app_key=${keyRecipe}&mealType=${mealType}&field=uri&field=label&field=image&field=images&field=url&field=shareAs&field=healthLabels&field=calories&field=cuisineType&field=mealType&random=true`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
-  fetchData();
-  }, []);
+      const data = await response.json();
+      setJsonData(data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div>
-        {jsonData && <DishCards jsonData={jsonData} />} 
-        <button onclick={GetResponseText}>
-          start
-        </button>
-    </div>
+    <>
+      <div>
+        <form>
+          <label id="sidebar">
+            Meal Type:
+            {mealTypes.map((type) => (
+              <label key={type}>
+                <input
+                  type="radio"
+                  value={type}
+                  checked={mealType === type}
+                  onChange={handleMealTypeChange}
+                />
+                {type}
+            </label>
+          ))}
+        </label>    
+        </form>
+        </div>
+        <div id="dishes">
+          {loading && <p>Loading...</p>}
+          {jsonData && <DishCards jsonData={jsonData} />}
+        </div>
+      
+    </>
   );
 }
 
-export default DataForCard;
+export default App;
+
+// export default DataForCard;
 
 
 // async function addCards(){

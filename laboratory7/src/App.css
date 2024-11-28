@@ -39,6 +39,8 @@
 }
 
 #sidebar {
+  display: flex;
+  flex-direction: column;
   width: 200px;
   height: 100vh;
   background-color: #f0f0f0;
@@ -53,4 +55,11 @@
 #dishes {
   margin-left: 220px; /* Отступ справа от бокового меню */
   padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  
+  /* Отступы между рядами */
+  row-gap: 50px;
+  /* Отступы между колонками */
+  column-gap: 20px;
 }

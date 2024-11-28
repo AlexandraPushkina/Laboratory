@@ -1,17 +1,6 @@
 .dishCard{
-    margin: 10px;
-    width: 18rem;
+    width: 320px;
     border-radius: 20px;
     border: 3px solid #2c303b;
     text-align: left;
-  }
-  
-  .imgCard{
-   
-    max-height: 250px;
-    max-width: 250px;
-    background-size: 100% auto;
-    padding: 15px;
-    border-radius: 20px;
-    width: auto!important;
   }

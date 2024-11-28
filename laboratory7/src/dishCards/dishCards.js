@@ -4,25 +4,22 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { Fire, Check, Check2Square, Globe2, Cup, X } from 'react-bootstrap-icons'; 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import './dishCards.css';
 
-function emblemForVegan(hit){
-    if (hit.healthLabels.find((i) => i === "Vegetarian") != -1 ){  //FIXME: возможно ошибка
-    return (<Col sm={2}>
-        <Check2Square size={20}/> 
-      </Col>)
-    }
-    else  
-    return (<Col sm={2}>
-        <X size={20}/> 
-      </Col>);
-    
+function emblemForVegan(hit) {
+  if (hit && hit.healthLabels && hit.healthLabels.includes("Vegetarian")) {
+      return <Check2Square size={20} />;
+  } else {
+      return <X size={20} />;
+  }
 }
 
-function noticeForVegan(hit){
-    if (hit.healthLabels.find((i) => i === "Vegetarian") != -1 ){  //FIXME: возможно ошибка
-        return 'Yes';
-        }
-        else return 'No';
+function noticeForVegan(hit) {
+  if (hit && hit.healthLabels && hit.healthLabels.includes("Vegetarian")) {
+      return 'Yes';
+  } else {
+      return 'No';
+  }
 }
 
 //заполняем 1 карту
@@ -30,52 +27,57 @@ function DishCard({hit}){
     return(
        <Card className='dishCard'>
        <Card.Body>
-       <Card.Img className='imgCard mb-0' variant="top" src={hit.images} />
          <Card.Title className='mb-2'>
-           {hit.title}
+           {hit.label}
          </Card.Title>
-         <Card.Subtitle className='mb-1'>
-           <Row className='m-2'>
-             <Col sm={2}>
-               <Cup size={20}/> 
-             </Col>
-             <Col sm={10} className='mt-1'>
-               Meal type: {hit.mealType} ({hit.dishType});
-             </Col>
-           </Row>
-         </Card.Subtitle>
-
          <ListGroup variant="flush">
-           <ListGroup.Item>
-             <Row>
-            <Col sm={2}>
-                <Globe2 size={20}/> 
-            </Col>
-            <p>Cuisine: {hit.cuisineType}</p>
-            <Col sm={2}>
-                <Fire size={20}/> 
-            </Col>
-                <Col sm={10} className='mt-1'>
-                <b>Calories: {hit.calories}</b>
-            </Col>
-             </Row>
-             <Row>
-             <Col sm={2}>
-                 {emblemForVegan} 
-               </Col>
-               <Col sm={10} className='mt-1'>
-                 <b>For vegan: {noticeForVegan} </b>
-               </Col>
-             </Row>
-           </ListGroup.Item>
 
+         <ListGroup.Item>
+         <Row className='m-2'>
+            <Col sm={2}>
+              <Cup size={20}/> 
+            </Col>
+            <Col sm={10} className='mt-1'>
+              <b>Meal type: {hit.mealType[0]}</b>
+            </Col>
+          </Row>
+
+
+          <Row className='m-2'>
+            <Col sm={2}>
+              <Globe2 size={20}/> 
+            </Col>
+            <Col sm={10} className='mt-1'>
+              <p>Cuisine: {hit.cuisineType[0]}</p>
+            </Col>
+            </Row>
+
+            <Row className='m-2'>
+              <Col sm={2}>
+                <Fire size={20}/> 
+              </Col>
+                <Col sm={10} className='mt-1'>
+                <p>Calories: {Math.round(Number(hit.calories))}</p>
+              </Col>
+            </Row>
+             
+            <Row className='m-2'>
+              <Col sm={2}>
+                {emblemForVegan(hit)} 
+              </Col>
+              <Col sm={10} className='mt-1'>
+                <p>For vegan: {noticeForVegan(hit)} </p>
+              </Col>
+            </Row>
+
+           </ListGroup.Item>
            <ListGroup.Item>   
              <Row>
                <Col sm={2}>
                  <Check size={20}/> 
                </Col>
                <Col sm={10} className='mt-1'>
-                 <b>Share link: {hit.shareAs} </b>
+                 <b>Share link: <a href={hit.shareAs}> {hit.shareAs}</a> </b>
                </Col>
              </Row>
            </ListGroup.Item>
