@@ -4,3 +4,8 @@
     border: 3px solid #2c303b;
     text-align: left;
   }
+
+.dish_paginator{
+  grid-column: 2 / span 1;
+  grid-row: 3 / span 1;
+}
